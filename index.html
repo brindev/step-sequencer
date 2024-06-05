@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Step Sequencer</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="loading">
+      <p>Loading...</p>
+    </div>
+
+    <div class="wrapper">
+      <div class="main-container">
+        <header class="header"><h1>STEP SEQUENCER</h1></header>
+
+        <section class="main-controls">
+          <!-- misc -->
+          <button class="btn main-btn-misc">Misc</button>
+
+          <!-- bpm -->
+          <div class="main-bpm-container">
+            <label for="bpm">BPM</label>
+            <input
+              name="bpm"
+              id="bpm"
+              class="slider-bpm"
+              type="range"
+              min="60"
+              max="360"
+              value="120"
+              step="1"
+            />
+            <!-- <span id="bpmval">120</span> -->
+            <input
+              type="text"
+              id="bpmval"
+              class="bpm-text-input"
+              value="120"
+              minlength="2"
+              maxlength="3"
+            />
+          </div>
+
+          <!-- steps -->
+          <div class="main-step-container">
+            <div class="step-label">STEP</div>
+            <div id="step-dropdown-selector">
+              <div class="step-dropdown--value">8</div>
+              <div class="step-dropdown--arrow"></div>
+            </div>
+            <div class="step-dropdown--panel">
+              <div class="step-dropdown--select" data-grid-value="4">4</div>
+              <div class="step-dropdown--select" data-grid-value="8">8</div>
+              <div class="step-dropdown--select" data-grid-value="12">12</div>
+              <div class="step-dropdown--select" data-grid-value="16">16</div>
+            </div>
+          </div>
+
+          <!-- notes -->
+          <div class="main-note-container">
+            <div class="note-label">NOTE</div>
+            <div id="note-dropdown-selector">
+              <div class="note-dropdown--value">1/16</div>
+              <div class="note-dropdown--arrow"></div>
+            </div>
+            <div class="note-dropdown--panel">
+              <div class="note-dropdown--select" data-note-value="1/4">1/4</div>
+              <div class="note-dropdown--select" data-note-value="1/8">1/8</div>
+              <div class="note-dropdown--select" data-note-value="1/16">
+                1/16
+              </div>
+            </div>
+          </div>
+
+          <!-- play btn -->
+          <div class="main-btn-play-container">
+            <input type="checkbox" id="playBtn" />
+            <label for="playBtn">Play</label>
+          </div>
+
+          <!-- mixer -->
+          <div class="main-btn-mixer-container">
+            <button class="btn btn-mixer">Mixer</button>
+          </div>
+        </section>
+
+        <div class="sequencer-container">
+          <div class="time-indicator">
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+            <div class="indicator-cell">&nbsp;</div>
+          </div>
+
+          <!-- track number and names panel -->
+          <div class="track-container">
+            <div id="link-blocker-hack"></div>
+
+            <div id="track-row0" class="track-row" data-track-num="0">
+              <div id="track-number0" class="track-number">1</div>
+              <div
+                id="track-name0"
+                class="track-sample-name"
+                data-track-select="0"
+              ></div>
+            </div>
+
+            <div id="track-row1" class="track-row" data-track-num="1">
+              <div id="track-number1" class="track-number">2</div>
+              <div
+                id="track-name1"
+                class="track-sample-name"
+                data-track-select="1"
+              ></div>
+            </div>
+
+            <div id="track-row2" class="track-row" data-track-num="2">
+              <div id="track-number2" class="track-number">3</div>
+              <div
+                id="track-name2"
+                class="track-sample-name"
+                data-track-select="2"
+              ></div>
+            </div>
+
+            <div id="track-row3" class="track-row" data-track-num="3">
+              <div id="track-number3" class="track-number">4</div>
+              <div
+                id="track-name3"
+                class="track-sample-name"
+                data-track-select="3"
+              ></div>
+            </div>
+
+            <div id="track-row4" class="track-row" data-track-num="4">
+              <div id="track-number4" class="track-number">5</div>
+              <div
+                id="track-name4"
+                class="track-sample-name"
+                data-track-select="4"
+              ></div>
+            </div>
+
+            <div id="track-row5" class="track-row" data-track-num="5">
+              <div id="track-number5" class="track-number">6</div>
+              <div
+                id="track-name5"
+                class="track-sample-name"
+                data-track-select="5"
+              ></div>
+            </div>
+
+            <div id="track-row6" class="track-row" data-track-num="6">
+              <div id="track-number6" class="track-number">7</div>
+              <div
+                id="track-name6"
+                class="track-sample-name"
+                data-track-select="6"
+              ></div>
+            </div>
+
+            <div id="track-row7" class="track-row" data-track-num="7">
+              <div id="track-number7" class="track-number">8</div>
+              <div
+                id="track-name7"
+                class="track-sample-name"
+                data-track-select="7"
+              ></div>
+            </div>
+
+            <div id="track-row8" class="track-row" data-track-num="8">
+              <div id="track-number8" class="track-number">9</div>
+              <div
+                id="track-name8"
+                class="track-sample-name"
+                data-track-select="8"
+              ></div>
+            </div>
+          </div>
+
+          <!-- cell rows panel -->
+          <div class="cell-rows-container">
+            <div class="pads">
+              <input type="checkbox" id="v1n1" />
+              <label for="v1n1">Voice 1, Note 1</label>
+              <input type="checkbox" id="v1n2" />
+              <label for="v1n2">Voice 1, Note 2</label>
+              <input type="checkbox" id="v1n3" />
+              <label for="v1n3">Voice 1, Note 3</label>
+              <input type="checkbox" id="v1n4" />
+              <label for="v1n4">Voice 1, Note 4</label>
+              <input type="checkbox" id="v1n5" />
+              <label for="v1n5">Voice 1, Note 5</label>
+              <input type="checkbox" id="v1n6" />
+              <label for="v1n6">Voice 1, Note 6</label>
+              <input type="checkbox" id="v1n7" />
+              <label for="v1n7">Voice 1, Note 7</label>
+              <input type="checkbox" id="v1n8" />
+              <label for="v1n8">Voice 1, Note 8</label>
+              <input type="checkbox" id="v1n9" />
+              <label for="v1n9">Voice 1, Note 9</label>
+              <input type="checkbox" id="v1n10" />
+              <label for="v1n10">Voice 1, Note 10</label>
+              <input type="checkbox" id="v1n11" />
+              <label for="v1n11">Voice 1, Note 11</label>
+              <input type="checkbox" id="v1n12" />
+              <label for="v1n12">Voice 1, Note 12</label>
+              <input type="checkbox" id="v1n13" />
+              <label for="v1n13">Voice 1, Note 13</label>
+              <input type="checkbox" id="v1n14" />
+              <label for="v1n14">Voice 1, Note 14</label>
+              <input type="checkbox" id="v1n15" />
+              <label for="v1n15">Voice 1, Note 15</label>
+              <input type="checkbox" id="v1n16" />
+              <label for="v1n16">Voice 1, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v2n1" />
+              <label for="v2n1">Voice 2, Note 1</label>
+              <input type="checkbox" id="v2n2" />
+              <label for="v2n2">Voice 2, Note 2</label>
+              <input type="checkbox" id="v2n3" />
+              <label for="v2n3">Voice 2, Note 3</label>
+              <input type="checkbox" id="v2n4" />
+              <label for="v2n4">Voice 2, Note 4</label>
+              <input type="checkbox" id="v2n5" />
+              <label for="v2n5">Voice 2, Note 5</label>
+              <input type="checkbox" id="v2n6" />
+              <label for="v2n6">Voice 2, Note 6</label>
+              <input type="checkbox" id="v2n7" />
+              <label for="v2n7">Voice 2, Note 7</label>
+              <input type="checkbox" id="v2n8" />
+              <label for="v2n8">Voice 2, Note 8</label>
+
+              <input type="checkbox" id="v2n9" />
+              <label for="v2n9">Voice 2, Note 9</label>
+              <input type="checkbox" id="v2n10" />
+              <label for="v2n10">Voice 2, Note 10</label>
+              <input type="checkbox" id="v2n11" />
+              <label for="v2n11">Voice 2, Note 11</label>
+              <input type="checkbox" id="v2n12" />
+              <label for="v2n12">Voice 2, Note 12</label>
+
+              <input type="checkbox" id="v2n13" />
+              <label for="v2n13">Voice 2, Note 13</label>
+              <input type="checkbox" id="v2n14" />
+              <label for="v2n14">Voice 2, Note 14</label>
+              <input type="checkbox" id="v2n15" />
+              <label for="v2n15">Voice 2, Note 15</label>
+              <input type="checkbox" id="v2n16" />
+              <label for="v2n16">Voice 2, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v3n1" />
+              <label for="v3n1">Voice 3, Note 1</label>
+              <input type="checkbox" id="v3n2" />
+              <label for="v3n2">Voice 3, Note 2</label>
+              <input type="checkbox" id="v3n3" />
+              <label for="v3n3">Voice 3, Note 3</label>
+              <input type="checkbox" id="v3n4" />
+              <label for="v3n4">Voice 3, Note 4</label>
+              <input type="checkbox" id="v3n5" />
+              <label for="v3n5">Voice 3, Note 5</label>
+              <input type="checkbox" id="v3n6" />
+              <label for="v3n6">Voice 3, Note 6</label>
+              <input type="checkbox" id="v3n7" />
+              <label for="v3n7">Voice 3, Note 7</label>
+              <input type="checkbox" id="v3n8" />
+              <label for="v3n8">Voice 3, Note 8</label>
+
+              <input type="checkbox" id="v3n9" />
+              <label for="v3n9">Voice 3, Note 9</label>
+              <input type="checkbox" id="v3n10" />
+              <label for="v3n10">Voice 3, Note 10</label>
+              <input type="checkbox" id="v3n11" />
+              <label for="v3n11">Voice 3, Note 11</label>
+              <input type="checkbox" id="v3n12" />
+              <label for="v3n12">Voice 3, Note 12</label>
+
+              <input type="checkbox" id="v3n13" />
+              <label for="v3n13">Voice 3, Note 13</label>
+              <input type="checkbox" id="v3n14" />
+              <label for="v3n14">Voice 3, Note 14</label>
+              <input type="checkbox" id="v3n15" />
+              <label for="v3n15">Voice 3, Note 15</label>
+              <input type="checkbox" id="v3n16" />
+              <label for="v3n16">Voice 3, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v4n1" />
+              <label for="v4n1">Voice 4, Note 1</label>
+              <input type="checkbox" id="v4n2" />
+              <label for="v4n2">Voice 4, Note 2</label>
+              <input type="checkbox" id="v4n3" />
+              <label for="v4n3">Voice 4, Note 3</label>
+              <input type="checkbox" id="v4n4" />
+              <label for="v4n4">Voice 4, Note 4</label>
+              <input type="checkbox" id="v4n5" />
+              <label for="v4n5">Voice 4, Note 5</label>
+              <input type="checkbox" id="v4n6" />
+              <label for="v4n6">Voice 4, Note 6</label>
+              <input type="checkbox" id="v4n7" />
+              <label for="v4n7">Voice 4, Note 7</label>
+              <input type="checkbox" id="v4n8" />
+              <label for="v4n8">Voice 4, Note 8</label>
+
+              <input type="checkbox" id="v4n9" />
+              <label for="v4n9">Voice 4, Note 9</label>
+              <input type="checkbox" id="v4n10" />
+              <label for="v4n10">Voice 4, Note 10</label>
+              <input type="checkbox" id="v4n11" />
+              <label for="v4n11">Voice 4, Note 11</label>
+              <input type="checkbox" id="v4n12" />
+              <label for="v4n12">Voice 4, Note 12</label>
+
+              <input type="checkbox" id="v4n13" />
+              <label for="v4n13">Voice 4, Note 13</label>
+              <input type="checkbox" id="v4n14" />
+              <label for="v4n14">Voice 4, Note 14</label>
+              <input type="checkbox" id="v4n15" />
+              <label for="v4n15">Voice 4, Note 15</label>
+              <input type="checkbox" id="v4n16" />
+              <label for="v4n16">Voice 4, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v5n1" />
+              <label for="v5n1">Voice 5, Note 1</label>
+              <input type="checkbox" id="v5n2" />
+              <label for="v5n2">Voice 5, Note 2</label>
+              <input type="checkbox" id="v5n3" />
+              <label for="v5n3">Voice 5, Note 3</label>
+              <input type="checkbox" id="v5n4" />
+              <label for="v5n4">Voice 5, Note 4</label>
+              <input type="checkbox" id="v5n5" />
+              <label for="v5n5">Voice 5, Note 5</label>
+              <input type="checkbox" id="v5n6" />
+              <label for="v5n6">Voice 5, Note 6</label>
+              <input type="checkbox" id="v5n7" />
+              <label for="v5n7">Voice 5, Note 7</label>
+              <input type="checkbox" id="v5n8" />
+              <label for="v5n8">Voice 5, Note 8</label>
+
+              <input type="checkbox" id="v5n9" />
+              <label for="v5n9">Voice 5, Note 9</label>
+              <input type="checkbox" id="v5n10" />
+              <label for="v5n10">Voice 5, Note 10</label>
+              <input type="checkbox" id="v5n11" />
+              <label for="v5n11">Voice 5, Note 11</label>
+              <input type="checkbox" id="v5n12" />
+              <label for="v5n12">Voice 5, Note 12</label>
+
+              <input type="checkbox" id="v5n13" />
+              <label for="v5n13">Voice 5, Note 13</label>
+              <input type="checkbox" id="v5n14" />
+              <label for="v5n14">Voice 5, Note 14</label>
+              <input type="checkbox" id="v5n15" />
+              <label for="v5n15">Voice 5, Note 15</label>
+              <input type="checkbox" id="v5n16" />
+              <label for="v5n16">Voice 5, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v6n1" />
+              <label for="v6n1">Voice 6, Note 1</label>
+              <input type="checkbox" id="v6n2" />
+              <label for="v6n2">Voice 6, Note 2</label>
+              <input type="checkbox" id="v6n3" />
+              <label for="v6n3">Voice 6, Note 3</label>
+              <input type="checkbox" id="v6n4" />
+              <label for="v6n4">Voice 6, Note 4</label>
+              <input type="checkbox" id="v6n5" />
+              <label for="v6n5">Voice 6, Note 5</label>
+              <input type="checkbox" id="v6n6" />
+              <label for="v6n6">Voice 6, Note 6</label>
+              <input type="checkbox" id="v6n7" />
+              <label for="v6n7">Voice 6, Note 7</label>
+              <input type="checkbox" id="v6n8" />
+              <label for="v6n8">Voice 6, Note 8</label>
+
+              <input type="checkbox" id="v6n9" />
+              <label for="v6n9">Voice 6, Note 9</label>
+              <input type="checkbox" id="v6n10" />
+              <label for="v6n10">Voice 6, Note 10</label>
+              <input type="checkbox" id="v6n11" />
+              <label for="v6n11">Voice 6, Note 11</label>
+              <input type="checkbox" id="v6n12" />
+              <label for="v6n12">Voice 6, Note 12</label>
+
+              <input type="checkbox" id="v6n13" />
+              <label for="v6n13">Voice 6, Note 13</label>
+              <input type="checkbox" id="v6n14" />
+              <label for="v6n14">Voice 6, Note 14</label>
+              <input type="checkbox" id="v6n15" />
+              <label for="v6n15">Voice 6, Note 15</label>
+              <input type="checkbox" id="v6n16" />
+              <label for="v6n16">Voice 6, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v7n1" />
+              <label for="v7n1">Voice 7, Note 1</label>
+              <input type="checkbox" id="v7n2" />
+              <label for="v7n2">Voice 7, Note 2</label>
+              <input type="checkbox" id="v7n3" />
+              <label for="v7n3">Voice 7, Note 3</label>
+              <input type="checkbox" id="v7n4" />
+              <label for="v7n4">Voice 7, Note 4</label>
+              <input type="checkbox" id="v7n5" />
+              <label for="v7n5">Voice 7, Note 5</label>
+              <input type="checkbox" id="v7n6" />
+              <label for="v7n6">Voice 7, Note 6</label>
+              <input type="checkbox" id="v7n7" />
+              <label for="v7n7">Voice 7, Note 7</label>
+              <input type="checkbox" id="v7n8" />
+              <label for="v7n8">Voice 7, Note 8</label>
+
+              <input type="checkbox" id="v7n9" />
+              <label for="v7n9">Voice 7, Note 9</label>
+              <input type="checkbox" id="v7n10" />
+              <label for="v7n10">Voice 7, Note 10</label>
+              <input type="checkbox" id="v7n11" />
+              <label for="v7n11">Voice 7, Note 11</label>
+              <input type="checkbox" id="v7n12" />
+              <label for="v7n12">Voice 7, Note 12</label>
+
+              <input type="checkbox" id="v7n13" />
+              <label for="v7n13">Voice 7, Note 13</label>
+              <input type="checkbox" id="v7n14" />
+              <label for="v7n14">Voice 7, Note 14</label>
+              <input type="checkbox" id="v7n15" />
+              <label for="v7n15">Voice 7, Note 15</label>
+              <input type="checkbox" id="v7n16" />
+              <label for="v7n16">Voice 7, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v8n1" />
+              <label for="v8n1">Voice 8, Note 1</label>
+              <input type="checkbox" id="v8n2" />
+              <label for="v8n2">Voice 8, Note 2</label>
+              <input type="checkbox" id="v8n3" />
+              <label for="v8n3">Voice 8, Note 3</label>
+              <input type="checkbox" id="v8n4" />
+              <label for="v8n4">Voice 8, Note 4</label>
+              <input type="checkbox" id="v8n5" />
+              <label for="v8n5">Voice 8, Note 5</label>
+              <input type="checkbox" id="v8n6" />
+              <label for="v8n6">Voice 8, Note 6</label>
+              <input type="checkbox" id="v8n7" />
+              <label for="v8n7">Voice 8, Note 7</label>
+              <input type="checkbox" id="v8n8" />
+              <label for="v8n8">Voice 8, Note 8</label>
+
+              <input type="checkbox" id="v8n9" />
+              <label for="v8n9">Voice 8, Note 9</label>
+              <input type="checkbox" id="v8n10" />
+              <label for="v8n10">Voice 8, Note 10</label>
+              <input type="checkbox" id="v8n11" />
+              <label for="v8n11">Voice 8, Note 11</label>
+              <input type="checkbox" id="v8n12" />
+              <label for="v8n12">Voice 8, Note 12</label>
+
+              <input type="checkbox" id="v8n13" />
+              <label for="v8n13">Voice 8, Note 13</label>
+              <input type="checkbox" id="v8n14" />
+              <label for="v8n14">Voice 8, Note 14</label>
+              <input type="checkbox" id="v8n15" />
+              <label for="v8n15">Voice 8, Note 15</label>
+              <input type="checkbox" id="v8n16" />
+              <label for="v8n16">Voice 8, Note 16</label>
+            </div>
+
+            <div class="pads">
+              <input type="checkbox" id="v9n1" />
+              <label for="v9n1">Voice 9, Note 1</label>
+              <input type="checkbox" id="v9n2" />
+              <label for="v9n2">Voice 9, Note 2</label>
+              <input type="checkbox" id="v9n3" />
+              <label for="v9n3">Voice 9, Note 3</label>
+              <input type="checkbox" id="v9n4" />
+              <label for="v9n4">Voice 9, Note 4</label>
+              <input type="checkbox" id="v9n5" />
+              <label for="v9n5">Voice 9, Note 5</label>
+              <input type="checkbox" id="v9n6" />
+              <label for="v9n6">Voice 9, Note 6</label>
+              <input type="checkbox" id="v9n7" />
+              <label for="v9n7">Voice 9, Note 7</label>
+              <input type="checkbox" id="v9n8" />
+              <label for="v9n8">Voice 9, Note 8</label>
+
+              <input type="checkbox" id="v9n9" />
+              <label for="v9n9">Voice 9, Note 9</label>
+              <input type="checkbox" id="v9n10" />
+              <label for="v9n10">Voice 9, Note 10</label>
+              <input type="checkbox" id="v9n11" />
+              <label for="v9n11">Voice 9, Note 11</label>
+              <input type="checkbox" id="v9n12" />
+              <label for="v9n12">Voice 9, Note 12</label>
+
+              <input type="checkbox" id="v9n13" />
+              <label for="v9n13">Voice 9, Note 13</label>
+              <input type="checkbox" id="v9n14" />
+              <label for="v9n14">Voice 9, Note 14</label>
+              <input type="checkbox" id="v9n15" />
+              <label for="v9n15">Voice 9, Note 15</label>
+              <input type="checkbox" id="v9n16" />
+              <label for="v9n16">Voice 9, Note 16</label>
+            </div>
+          </div>
+
+          <!-- track settings -->
+          <div class="track-settings-container">
+            <div class="track-settings-content">
+              <div id="track-settings-close-panel" data-track-settings-type="">
+                X
+              </div>
+              <div class="panel-header">
+                Track <span id="panel-header-num">1</span> -
+                <span id="panel-header-instr">808 Kick</span>
+              </div>
+              <div class="track-settings-row">
+                <div class="rate-container">
+                  <div class="rate-controls">
+                    <div class="track-controls-row-labels">
+                      <label for="range-rate">Playback:</label>
+                      <span
+                        id="rate-value-display"
+                        class="settings-value-display"
+                        >1</span
+                      >
+                    </div>
+                    <div class="track-controls-row-slider">
+                      <input
+                        type="range"
+                        id="range-rate"
+                        class="slider-rate"
+                        min="0.1"
+                        max="2.0"
+                        step="0.1"
+                        value="1"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="reverse-container">
+                  <div class="reverse-controls">
+                    <label for="reverse-mode">Reverse:</label>
+                    <input type="checkbox" id="reverse-mode" />
+                  </div>
+                </div>
+              </div>
+              <div class="track-settings-row">
+                <div class="swing-container">
+                  <div class="swing-controls">
+                    <div class="track-controls-row-labels">
+                      <label for="range-swing">Swing:</label>
+                      <span
+                        id="swing-value-display"
+                        class="settings-value-display"
+                        >0%</span
+                      >
+                    </div>
+                    <div class="track-controls-row-slider">
+                      <input
+                        type="range"
+                        id="range-swing"
+                        class="slider-swing"
+                        min="0"
+                        max="0.10"
+                        step="0.01"
+                        value="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="humanize-container">
+                  <div class="humanize-controls">
+                    <div class="track-controls-row-labels">
+                      <label for="range-humanize">Humanize:</label>
+                      <span
+                        id="humanize-value-display"
+                        class="settings-value-display"
+                        >0%</span
+                      >
+                    </div>
+                    <div class="track-controls-row-slider">
+                      <input
+                        type="range"
+                        id="range-humanize"
+                        class="slider-humanize"
+                        min="0"
+                        max="5"
+                        step="0.5"
+                        value="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-fix-main-right">&nbsp;</div>
+        </div>
+
+        <!-- misc pannel -->
+        <section class="misc-container">
+          <div class="tabs-panel">
+            <div class="tab" data-tab="0">Save/Load</div>
+            <div class="tab" data-tab="1">Colors</div>
+            <div class="tab" data-tab="2">Presets</div>
+            <div class="tab" data-tab="3">Documentation</div>
+            <div class="tab" data-tab="4">About</div>
+          </div>
+          <div class="tab-content-panel">
+            <div class="tab-content content-hello" id="tab-content-hello">
+              Hello!
+            </div>
+            <div class="tab-content" id="tab-content-load">
+              Coming at some point
+            </div>
+            <div class="tab-content" id="tab-content-colors">
+              <div class="colors-label">Highlight Color:</div>
+              <ul class="colors">
+                <li data-value="#00ffff">&nbsp;</li>
+                <li data-value="#ff99ff">&nbsp;</li>
+                <li data-value="#66ff99">&nbsp;</li>
+                <li data-value="#ff9900">&nbsp;</li>
+                <li data-value="#0099ff">&nbsp;</li>
+              </ul>
+              <div class="dark-light-mode">
+                <label for="dark-mode">Dark Mode:</label>
+                <input type="checkbox" id="dark-mode" checked="checked" />
+              </div>
+            </div>
+            <div class="tab-content" id="tab-content-presets">
+              <div class="preset-beat-lists">
+                <ul class="preset-beats">
+                  <li class="preset-beat-header">Urban</li>
+                  <li class="preset-beat" data-preset-beat="Hip Hop 1">
+                    Hip-Hop 1
+                  </li>
+                  <li class="preset-beat" data-preset-beat="Hip Hop 2">
+                    Hip-Hop 2
+                  </li>
+                  <li class="preset-beat" data-preset-beat="R&B">R&B</li>
+                </ul>
+                <ul class="preset-beats">
+                  <li class="preset-beat-header">Danse</li>
+                  <li class="preset-beat" data-preset-beat="Pop">Pop</li>
+                  <li class="preset-beat" data-preset-beat="House">House</li>
+                  <li class="preset-beat" data-preset-beat="Techno">Techno</li>
+                </ul>
+                <ul class="preset-beats">
+                  <li class="preset-beat-header">International</li>
+                  <li class="preset-beat" data-preset-beat="Reggae 1">
+                    Reggae 1
+                  </li>
+                  <li class="preset-beat" data-preset-beat="Reggae 2">
+                    Reggae 2
+                  </li>
+                  <li class="preset-beat" data-preset-beat="Dancehall">
+                    Dancehall
+                  </li>
+                  <li class="preset-beat" data-preset-beat="Reggaeton">
+                    Reggaeton
+                  </li>
+                </ul>
+                <ul class="preset-beats">
+                  <li class="preset-beat-header">Rock</li>
+                  <li class="preset-beat" data-preset-beat="Rock">Rock</li>
+                  <li class="preset-beat" data-preset-beat="Punk">Punk</li>
+                  <li class="preset-beat" data-preset-beat="Metal 1">
+                    Metal 1
+                  </li>
+                  <li class="preset-beat" data-preset-beat="Metal 2">
+                    Metal 2
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-content-docs">
+              <p>
+                <strong>BPM</strong> (Beats Per Minute): Use the slider or enter
+                a number to set the tempo.
+              </p>
+              <p>
+                <strong>STEP</strong>: Determines length of the loop. 4, 8, 12,
+                and 16.
+              </p>
+              <!-- <p>
+              <strong>Adding Tracks</strong>: Click on the '+' sign to add a new
+              track.
+            </p>
+            <p>
+              <strong>Removing Tracks</strong>: Click on the '-' next to the
+              track's number to remove the track.
+            </p> -->
+              <p>
+                <strong>Selecting Kits</strong>: Click on any track sample name,
+                then click on the kit name from the sample selector panel.
+              </p>
+              <p>
+                <strong>Selecting Samples</strong>: Click on a track sample name
+                to open the sample selector panel.
+              </p>
+              <!-- <p>
+              <strong>Importing samples</strong>: Click on a track's name or
+              create a new track. At the top of the sample selector panel, load
+              a .wav or .mp3 file and give the file a short name, then click the
+              Load button.
+            </p> -->
+              <p>
+                <strong>Playback Rate</strong>: Click on a track number to
+                adjust the track's playback rate setting.
+              </p>
+              <p><strong>Reverse</strong>: Reverses the sample.</p>
+              <p>
+                <strong>Track Swing</strong>: Click on a track number to adjust
+                the track's swing setting.
+              </p>
+              <p>
+                <strong>Track Humanize</strong>: Click on a track number to
+                adjust the track's humanize setting.
+              </p>
+              <p>
+                <strong>Mixer - LEVEL</strong>: Controls the audio level for the
+                channel.
+              </p>
+              <p>
+                <strong>Mixer - SOLO (S)</strong>: Mutes all channels except the
+                selected channel.
+              </p>
+              <p>
+                <strong>Mixer - MUTE (M)</strong>: Mutes the selected channel.
+              </p>
+              <p>
+                <strong>Mixer - PAN</strong>: Controls stereo panning for the
+                channel.
+              </p>
+              <p>
+                <strong>Mixer - REV</strong>: Controls the amount of reverb for
+                the channel. Full left for dry signal.
+              </p>
+              <p>
+                <strong>Mixer - DLY</strong>: Controls the amount of delay for
+                the channel. Full left for dry signal.
+              </p>
+              <div class="bottom-fade">&nbsp;</div>
+            </div>
+            <div class="tab-content" id="tab-content-about">
+              <p>
+                This app used the awesome
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Advanced_techniques"
+                  target="_blank"
+                  >MDN</a
+                >
+                sequencer example as a base, specificly, the sequencing
+                mechanism.
+              </p>
+              <p></p>
+              <p>Future iterations to include:</p>
+              <ul>
+                <li>Exporting .wav/.mp3</li>
+                <li>1/8, 1/16 and 1/32 notes</li>
+                <li>Controlling FXs beyond DRY/WET</li>
+                <li>Reverb/Delay presets</li>
+                <li>Add synth sounds as tweakable instrument</li>
+                <li>Synth and samples piano roll</li>
+                <li>Adding and removing tracks</li>
+                <li>Loading one's own samples</li>
+              </ul>
+
+              <p>
+                <strong>Hack:</strong> Since the sequencer currently uses 1/4
+                notes, you can double the intended BPM and make the rythem in
+                half-time to mimic 1/8 notes.
+              </p>
+            </div>
+          </div>
+          <div class="border-fix-tabs">&nbsp;</div>
+        </section>
+
+        <!-- instrument selection panel -->
+        <section class="instr-select-container">
+          <div class="instr-content">
+            <span class="kit-select-header" data-kit="808">808 Kit</span
+            ><span class="kit-select-header" data-kit="909">909 Kit</span
+            ><span class="kit-select-header" data-kit="Linn">Linn Kit</span
+            ><span class="kit-select-header" data-kit="CR78">CR78 Kit</span
+            ><span class="kit-select-header" data-kit="Live">Live Kit</span>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Kick"
+              data-path="res\\kit808\\808_kik.wav"
+              data-playback-rate="1"
+            >
+              Kick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Kick"
+              data-path="res\\kit909\\909_kik.wav"
+              data-playback-rate="1"
+            >
+              Kick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Kick"
+              data-path="res\\kitLinn\\Linn_kik.wav"
+              data-playback-rate="1"
+            >
+              Kick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Kick"
+              data-path="res\\kitCR78\\CR78_kik.wav"
+              data-playback-rate="1"
+            >
+              Kick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Kick"
+              data-path="res\\kitLive\\Live_kik.wav"
+              data-playback-rate="1"
+            >
+              Kick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Snare"
+              data-path="res\\kit808\\808_sn.wav"
+              data-playback-rate="1"
+            >
+              Snare
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Snare"
+              data-path="res\\kit909\\909_sn.wav"
+              data-playback-rate="1"
+            >
+              Snare
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Snare"
+              data-path="res\\kitLinn\\Linn_sn.wav"
+              data-playback-rate="1"
+            >
+              Snare
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Snare"
+              data-path="res\\kitCR78\\CR78_sn.wav"
+              data-playback-rate="1"
+            >
+              Snare
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Snare"
+              data-path="res\\kitLive\\Live_sn.wav"
+              data-playback-rate="1"
+            >
+              Snare
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Side-stick"
+              data-path="res\\kit808\\808_sidestick.wav"
+              data-playback-rate="1"
+            >
+              Side-stick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Side-stick"
+              data-path="res\\kit909\\909_sidestick.wav"
+              data-playback-rate="1"
+            >
+              Side-stick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Side-stick"
+              data-path="res\\kitLinn\\Linn_sidestick.wav"
+              data-playback-rate="1"
+            >
+              Side-stick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Side-stick"
+              data-path="res\\kitCR78\\CR78_sidestick.wav"
+              data-playback-rate="1"
+            >
+              Side-stick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Side-stick"
+              data-path="res\\kitLive\\Live_sidestick.wav"
+              data-playback-rate="1"
+            >
+              Side-stick
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Clap"
+              data-path="res\\kit808\\808_clap.wav"
+              data-playback-rate="1"
+            >
+              Clap
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Clap"
+              data-path="res\\kit909\\909_clap.wav"
+              data-playback-rate="1"
+            >
+              Clap
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Clap"
+              data-path="res\\kitLinn\\Linn_clap.wav"
+              data-playback-rate="1"
+            >
+              Clap
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Clap"
+              data-path="res\\kitCR78\\CR78_clave.wav"
+              data-playback-rate="1"
+            >
+              Clap
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Clap"
+              data-path="res\\kitLive\\Live_rimshot.wav"
+              data-playback-rate="1"
+            >
+              Clap
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="HH Closed"
+              data-path="res\\kit808\\808_hh.wav"
+              data-playback-rate="1"
+            >
+              HH Closed
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="HH Closed"
+              data-path="res\\kit909\\909_hh.wav"
+              data-playback-rate="1"
+            >
+              HH Closed
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="HH Closed"
+              data-path="res\\kitLinn\\Linn_hh.wav"
+              data-playback-rate="1"
+            >
+              HH Closed
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="HH Closed"
+              data-path="res\\kitCR78\\CR78_hh.wav"
+              data-playback-rate="1"
+            >
+              HH Closed
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="HH Closed"
+              data-path="res\\kitLive\\Live_hh.wav"
+              data-playback-rate="1"
+            >
+              HH Closed
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="HH Open"
+              data-path="res\\kit808\\808_hhopen.wav"
+              data-playback-rate="1"
+            >
+              HH Open
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="HH Open"
+              data-path="res\\kit909\\909_hhopen.wav"
+              data-playback-rate="1"
+            >
+              HH Open
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="HH Open"
+              data-path="res\\kitLinn\\Linn_hhopen.wav"
+              data-playback-rate="1"
+            >
+              HH Open
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="HH Open"
+              data-path="res\\kitCR78\\CR78_hhopen.wav"
+              data-playback-rate="1"
+            >
+              HH Open
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="HH Open"
+              data-path="res\\kitLive\\Live_hhopen.wav"
+              data-playback-rate="1"
+            >
+              HH Open
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Tom High"
+              data-path="res\\kit808\\808_tom1.wav"
+              data-playback-rate="1"
+            >
+              Tom High
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Tom High"
+              data-path="res\\kit909\\909_tom1.wav"
+              data-playback-rate="1"
+            >
+              Tom High
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Tom High"
+              data-path="res\\kitLinn\\Linn_tom1.wav"
+              data-playback-rate="1"
+            >
+              Tom High
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Tom High"
+              data-path="res\\kitCR78\\CR78_tom1.wav"
+              data-playback-rate="1"
+            >
+              Tom High
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Tom High"
+              data-path="res\\kitLive\\Live_tom1.wav"
+              data-playback-rate="1"
+            >
+              Tom High
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Tom Low"
+              data-path="res\\kit808\\808_tom2.wav"
+              data-playback-rate="1"
+            >
+              Tom Low
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Tom Low"
+              data-path="res\\kit909\\909_tom2.wav"
+              data-playback-rate="1"
+            >
+              Tom Low
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Tom Low"
+              data-path="res\\kitLinn\\Linn_tom2.wav"
+              data-playback-rate="1"
+            >
+              Tom Low
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Tom Low"
+              data-path="res\\kitCR78\\CR78_tom2.wav"
+              data-playback-rate="1"
+            >
+              Tom Low
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Tom Low"
+              data-path="res\\kitLive\\Live_tom2.wav"
+              data-playback-rate="1"
+            >
+              Tom Low
+            </div>
+            <div
+              class="instr-select"
+              data-kit="808"
+              data-instr="Cymbal"
+              data-path="res\\kit808\\808_crash.wav"
+              data-playback-rate="1"
+            >
+              Cymbal
+            </div>
+            <div
+              class="instr-select"
+              data-kit="909"
+              data-instr="Cymbal"
+              data-path="res\\kit909\\909_crash.wav"
+              data-playback-rate="1"
+            >
+              Cymbal
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Linn"
+              data-instr="Cymbal"
+              data-path="res\\kitLinn\\Linn_crash.wav"
+              data-playback-rate="1"
+            >
+              Cymbal
+            </div>
+            <div
+              class="instr-select"
+              data-kit="CR78"
+              data-instr="Cymbal"
+              data-path="res\\kitCR78\\CR78_crash.wav"
+              data-playback-rate="1"
+            >
+              Cymbal
+            </div>
+            <div
+              class="instr-select"
+              data-kit="Live"
+              data-instr="Cymbal"
+              data-path="res\\kitLive\\Live_crash.wav"
+              data-playback-rate="1"
+            >
+              Cymbal
+            </div>
+          </div>
+        </section>
+
+        <!-- mixer panel -->
+        <section class="mixer-container">
+          <div class="mixer-panel">
+            <!-- channel 1 [0] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">1</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-0"
+                    class="trx-revb-lbl"
+                    data-channel-id="0"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-0"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-0" class="trx-dly-lbl" data-channel-id="0"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-0"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-0">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-0"
+                    data-id="0"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="0">S</div>
+                <div class="mute-btn" data-id="0">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-0">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-0"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Kick</div>
+            </div>
+
+            <!-- channel 2 [1] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">2</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-1"
+                    class="trx-revb-lbl"
+                    data-channel-id="1"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-1"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-1" class="trx-dly-lbl" data-channel-id="1"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-1"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-1">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-1"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="1">S</div>
+                <div class="mute-btn" data-id="1">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-1">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-1"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Snare</div>
+            </div>
+
+            <!-- channel 3 [2] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">3</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-2"
+                    class="trx-revb-lbl"
+                    data-channel-id="2"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-2"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-2" class="trx-dly-lbl" data-channel-id="2"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-2"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-2">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-2"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="2">S</div>
+                <div class="mute-btn" data-id="2">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-2">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-2"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Side-stick</div>
+            </div>
+
+            <!-- channel 4 [3] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">4</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-3"
+                    class="trx-revb-lbl"
+                    data-channel-id="3"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-3"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-3" class="trx-dly-lbl" data-channel-id="3"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-3"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-3">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-3"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="3">S</div>
+                <div class="mute-btn" data-id="3">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-3">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-3"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Clap</div>
+            </div>
+
+            <!-- channel 5 [4] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">5</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-4"
+                    class="trx-revb-lbl"
+                    data-channel-id="4"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-4"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-4" class="trx-dly-lbl" data-channel-id="4"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-4"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-4">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-4"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="4">S</div>
+                <div class="mute-btn" data-id="4">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-4">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-4"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 HH Closed</div>
+            </div>
+
+            <!-- channel 6 [5] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">6</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-5"
+                    class="trx-revb-lbl"
+                    data-channel-id="5"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-5"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-5" class="trx-dly-lbl" data-channel-id="5"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-5"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-5">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-5"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="5">S</div>
+                <div class="mute-btn" data-id="5">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-5">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-5"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 HH Open</div>
+            </div>
+
+            <!-- channel 7 [6] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">7</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-6"
+                    class="trx-revb-lbl"
+                    data-channel-id="6"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-6"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-6" class="trx-dly-lbl" data-channel-id="6"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-6"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-6">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-6"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="6">S</div>
+                <div class="mute-btn" data-id="6">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-6">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-6"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Tom High</div>
+            </div>
+
+            <!-- channel 8 [7] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">8</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-7"
+                    class="trx-revb-lbl"
+                    data-channel-id="7"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-7"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-7" class="trx-dly-lbl" data-channel-id="7"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-7"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-7">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-7"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="7">S</div>
+                <div class="mute-btn" data-id="7">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-7">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-7"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Tom Low</div>
+            </div>
+
+            <!-- channel 9 [8] -->
+            <div class="mixer-channel">
+              <div class="mixer-channel-num">9</div>
+              <div class="fx-strip-container">
+                <div class="channel-revb">
+                  <label
+                    for="trx-revb-8"
+                    class="trx-revb-lbl"
+                    data-channel-id="8"
+                    >REV</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-revb-8"
+                    class="slider-rev"
+                  />
+                </div>
+                <div class="channel-delay">
+                  <label for="trx-dly-8" class="trx-dly-lbl" data-channel-id="8"
+                    >DLY</label
+                  >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-dly-8"
+                    class="slider-dly"
+                  />
+                </div>
+              </div>
+              <div class="channel-pan">
+                <label for="trx-pan-8">PAN</label>
+                <div class="pan-controls">
+                  <span>L</span>
+                  <input
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.01"
+                    value="0"
+                    id="trx-pan-8"
+                    class="slider-pan"
+                  />
+                  <span>R</span>
+                </div>
+              </div>
+              <div class="mute-solo-container">
+                <div class="solo-btn" data-id="8">S</div>
+                <div class="mute-btn" data-id="8">M</div>
+              </div>
+              <div class="channel-level">
+                <label for="trx-level-8">LEVEL</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                  id="trx-level-8"
+                  class="slider-level"
+                  orient="vertical"
+                />
+                <div class="level-meter-container">
+                  <div class="level-meter">&nbsp;</div>
+                </div>
+              </div>
+              <div class="mix-channel-sample-name">808 Cymbal</div>
+            </div>
+          </div>
+
+          <!-- fx settings panel -->
+          <div class="fx-settings-container">
+            <div class="fx-panel-inner">
+              <div id="fx-close-panel" data-fx-type="">X</div>
+
+              <!-- delay settings -->
+              <div class="delay-settings-content">
+                <div class="delay-container">
+                  <!-- <div class="fx-presets-container">
+                    # DELAY PRESET DROPDOWN #
+                  </div>
+                  <label for="range-delay-duration">Duration:</label>
+                  <div class="delay-duration-controls">
+                    <input
+                      type="range"
+                      id="range-delay-duration"
+                      class="slider-delay-duration"
+                      min="0"
+                      max="0.10"
+                      step="0.01"
+                      value="0"
+                    />
+                    <span
+                      id="delay-duration-value-display"
+                      class="settings-value-display"
+                      >00ms</span
+                    >
+                  </div>
+                  <label for="range-delay-feeback">Feeback:</label>
+                  <div class="delay-feeback-controls">
+                    <input
+                      type="range"
+                      id="range-delay-feeback"
+                      class="slider-delay-feeback"
+                      min="0"
+                      max="0.10"
+                      step="0.01"
+                      value="0"
+                    />
+                    <span
+                      id="delay-feeback-value-display"
+                      class="settings-value-display"
+                      >0%</span
+                    >
+                  </div> -->
+                  <p>Coming soon</p>
+                </div>
+              </div>
+
+              <!-- reverb settings -->
+              <div class="reverb-settings-content">
+                <div class="reverb-container">
+                  <!-- <div class="fx-presets-container">
+                    <select id="reverb-dropdown" class="fx-presets-dropdown">
+                      <option data-verb-path="bypass">bypass</option>
+                      <option data-verb-path="res\\reverb\\diffusor1.wav">
+                        diffusor
+                      </option>
+                      <option data-verb-path="res\\reverb\\medium-room2.wav">
+                        Medium Room
+                      </option>
+                      <option data-verb-path="res\\reverb\\smooth-hall.wav">
+                        Smooth Hall
+                      </option>
+                    </select>
+                  </div>
+                  <label for="range-reverb-duration">Duration:</label>
+                  <div class="reverb-duration-controls">
+                    <input
+                      type="range"
+                      id="range-reverb-duration"
+                      class="slider-reverb-duration"
+                      min="0"
+                      max="0.10"
+                      step="0.01"
+                      value="0"
+                    />
+                    <span
+                      id="reverb-duration-value-display"
+                      class="settings-value-display"
+                      >00ms</span
+                    >
+                  </div>
+                  <label for="range-reverb-feeback">Feeback:</label>
+                  <div class="reverb-feeback-controls">
+                    <input
+                      type="range"
+                      id="range-reverb-feeback"
+                      class="slider-reverb-feeback"
+                      min="0"
+                      max="0.10"
+                      step="0.01"
+                      value="0"
+                    />
+                    <span
+                      id="reverb-feeback-value-display"
+                      class="settings-value-display"
+                      >0%</span
+                    >
+                  </div> -->
+                  <p>Coming soon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="footer">
+      Made with
+      <span class="drinks"
+        ><svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="none" height="256" width="256" />
+          <line
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="16"
+            x1="208"
+            x2="240"
+            y1="16"
+            y2="48"
+          />
+          <path
+            d="M216,24,152,72l-40,8L27.3,164.7a16.1,16.1,0,0,0,0,22.6l41.4,41.4a16.1,16.1,0,0,0,22.6,0L176,144l8-40,48-64"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="16"
+          />
+          <line
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="16"
+            x1="96"
+            x2="160"
+            y1="96"
+            y2="160"
+          />
+          <line
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="16"
+            x1="104"
+            x2="40"
+            y1="216"
+            y2="152"
+          /></svg
+      ></span>
+      by
+      <a
+        href="https://github.com/brindev/simon-simulator"
+        target="_blank"
+        rel="noreferrer"
+        >brindev</a
+      >
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
